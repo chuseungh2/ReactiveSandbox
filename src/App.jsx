@@ -15,14 +15,14 @@ import { STARTER_PLANETS } from "./data/starterPlanets.js";
 import "./App.css";
 
 export default function App() {
-  // ───── STORED STATE (the only useState calls in the entire app) ─────
+  // ───── STORED SHARED STATE (the assignment-relevant state) ─────
   const [planets, setPlanets] = useState(STARTER_PLANETS);
   const [selectedPlanetId, setSelectedPlanetId] = useState(
     STARTER_PLANETS[0].id
   );
   const [missionConstraints, setMissionConstraints] =
     useState(DEFAULT_CONSTRAINTS);
-  // Intro is purely UI shell state — not architectural shared state.
+  // Intro is purely UI shell state, not a second copy of domain data.
   // Living here just so the rest of the app can render underneath while
   // the cinematic plays, ready to take over the moment the user clicks
   // BEGIN MISSION.

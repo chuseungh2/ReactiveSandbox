@@ -117,64 +117,6 @@ function Metric({ label, value, unit }) {
   );
 }
 
-function EarthComparison({ radiusEarth, planetName }) {
-  // Sizes are in SVG units. Earth = 24, planet scales relative to it.
-  // Cap visual size so a hot-Jupiter-scale gas giant doesn't blow out the layout.
-  const earthR = 24;
-  const rawPlanetR = earthR * radiusEarth;
-  const planetR = Math.min(rawPlanetR, 80);
-  const totalWidth = 240;
-  const totalHeight = 130;
-  const earthCx = 60;
-  const planetCx = 170;
-  const cy = 70;
-
-  return (
-    <div className="earth-compare">
-      <span className="earth-compare__label">size vs. Earth</span>
-      <svg
-        viewBox={`0 0 ${totalWidth} ${totalHeight}`}
-        className="earth-compare__svg"
-        role="img"
-        aria-label={`${planetName} radius compared to Earth`}
-      >
-        <defs>
-          <radialGradient id="earth-gradient" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stopColor="#7AB7FF" />
-            <stop offset="60%" stopColor="#2C5AAA" />
-            <stop offset="100%" stopColor="#0A1F4A" />
-          </radialGradient>
-          <radialGradient id="planet-gradient" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stopColor="#9BFFFF" />
-            <stop offset="55%" stopColor="#00B8D9" />
-            <stop offset="100%" stopColor="#003B5C" />
-          </radialGradient>
-          <filter id="planet-glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="3" result="b" />
-            <feMerge>
-              <feMergeNode in="b" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-        <circle cx={earthCx} cy={cy} r={earthR} className="earth-compare__earth" filter="url(#planet-glow)" />
-        <circle cx={planetCx} cy={cy} r={planetR} className="earth-compare__planet" filter="url(#planet-glow)" />
-        {/* highlight specular to suggest a lit hemisphere */}
-        <circle cx={earthCx - earthR * 0.35} cy={cy - earthR * 0.35} r={earthR * 0.25}
-                fill="rgba(255,255,255,0.35)" />
-        <circle cx={planetCx - planetR * 0.35} cy={cy - planetR * 0.35} r={planetR * 0.25}
-                fill="rgba(255,255,255,0.4)" />
-        <text x={earthCx} y={cy + earthR + 22} textAnchor="middle" className="earth-compare__text">
-          Earth
-        </text>
-        <text x={planetCx} y={cy + planetR + 22} textAnchor="middle" className="earth-compare__text">
-          {radiusEarth.toFixed(2)}× R⊕
-        </text>
-      </svg>
-    </div>
-  );
-}
-
 // FeasibilityPanel was extracted to its own file so it could carry the
 // cinematic "status flip" state machine without polluting DetailView.
 // See src/components/FeasibilityPanel.jsx for the animation logic.

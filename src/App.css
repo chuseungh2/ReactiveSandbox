@@ -389,28 +389,33 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  transition: all 180ms ease;
+  transition:
+    background-color 90ms ease,
+    border-color 90ms ease,
+    box-shadow 90ms ease,
+    opacity 90ms ease;
   overflow: hidden;
   opacity: 0.85;
+  contain: paint;
 }
 
 .planet-card::before {
   content: "";
   position: absolute;
-  top: 0; left: 0; bottom: 0;
-  width: 0;
+  inset: 0;
   background: linear-gradient(90deg, var(--accent-cyan-glow), transparent);
-  transition: width 200ms ease;
+  opacity: 0;
+  transition: opacity 90ms ease;
+  pointer-events: none;
 }
 
 .planet-card:hover {
   background: var(--bg-elevated-hover);
   border-color: var(--border);
   opacity: 1;
-  transform: translateX(2px);
 }
 
-.planet-card:hover::before { width: 100%; opacity: 0.15; }
+.planet-card:hover::before { opacity: 0.12; }
 
 /* Status accents on the left edge are intentionally subdued for unselected
    cards — the badge on the right is the primary status signal. */
@@ -429,7 +434,6 @@
   border-left-color: var(--accent-cyan);
   box-shadow: var(--glow-cyan-sm), inset 0 0 24px rgba(0, 229, 255, 0.1);
   opacity: 1;
-  transform: translateX(2px);
 }
 
 .planet-card--selected.planet-card--nogo,
@@ -514,7 +518,7 @@
   background: var(--text-muted);
   opacity: 0.35;
   flex: 0 0 auto;
-  transition: all 180ms ease;
+  transition: opacity 90ms ease, background-color 90ms ease;
 }
 
 .planet-card__spark-dot--pass {
@@ -1785,9 +1789,77 @@
 @media (max-width: 900px) {
   html, body, #root { overflow: auto; height: auto; }
   .app { height: auto; min-height: 100vh; }
+  .header {
+    height: auto;
+    min-height: 68px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+  }
+  .header__readout {
+    width: 100%;
+    justify-content: space-between;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+  .header__title h1 {
+    font-size: 13px;
+    letter-spacing: 0.22em;
+  }
+  .header__subtitle {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+  }
   .panels {
     grid-template-columns: 1fr;
     grid-auto-rows: minmax(400px, auto);
   }
   .panel__body--scroll { overflow-y: visible; }
+}
+
+@media (max-width: 600px) {
+  .app {
+    padding: var(--space-3);
+  }
+  .header__readout {
+    align-items: flex-start;
+  }
+  .readout {
+    flex: 1 1 120px;
+  }
+  .planet-hero {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+  .planet-hero__meta,
+  .planet-hero__type {
+    justify-content: center;
+  }
+  .metrics-grid,
+  .mission-context__grid {
+    grid-template-columns: 1fr;
+  }
+  .profile-toggle,
+  .checkbox-grid {
+    grid-template-columns: 1fr;
+  }
+  .feas__hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+  .feas__status {
+    font-size: 38px;
+  }
+  .intro__title {
+    font-size: 34px;
+    letter-spacing: 0.22em;
+    padding-left: 0.22em;
+  }
+  .intro__subtitle {
+    letter-spacing: 0.18em;
+    padding-left: 0.18em;
+  }
 }

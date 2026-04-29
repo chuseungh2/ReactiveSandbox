@@ -35,11 +35,8 @@ export default function FeasibilityPanel({ feasibility, planet }) {
   const [displayedStatus, setDisplayedStatus] = useState(feasibility.status);
   const [flipping, setFlipping] = useState(false);
 
-  // ── Trackers for previous state and in-flight animation handles ──
+  // ── Tracker for previous state ──
   const prevRef = useRef({ status: null, planetId: null, score: null });
-  const scoreRaf = useRef(0);
-  const glitchRaf = useRef(0);
-  const flipTimer = useRef(0);
 
   useEffect(() => {
     const prev = prevRef.current;
@@ -47,16 +44,15 @@ export default function FeasibilityPanel({ feasibility, planet }) {
     const statusChanged = prev.status !== feasibility.status;
     const isCinematic = sameId && statusChanged && prev.status !== null;
 
-    // Cancel any in-flight animations from a previous flip
-    if (scoreRaf.current) cancelAnimationFrame(scoreRaf.current);
-    if (glitchRaf.current) cancelAnimationFrame(glitchRaf.current);
-    if (flipTimer.current) clearTimeout(flipTimer.current);
+    let cancelScore = null;
+    let cancelGlitch = null;
+    let flipTimer = 0;
 
     if (isCinematic) {
-      animateNumber(prev.score, feasibility.score, SCORE_MS, setDisplayedScore, scoreRaf);
-      glitchTo(feasibility.status, GLITCH_MS, setDisplayedStatus, glitchRaf);
+      cancelScore = animateNumber(prev.score, feasibility.score, SCORE_MS, setDisplayedScore);
+      cancelGlitch = glitchTo(feasibility.status, GLITCH_MS, setDisplayedStatus);
       setFlipping(true);
-      flipTimer.current = setTimeout(() => setFlipping(false), FLIP_MS);
+      flipTimer = setTimeout(() => setFlipping(false), FLIP_MS);
     } else {
       // Snap, no animation
       setDisplayedScore(feasibility.score);
@@ -71,9 +67,9 @@ export default function FeasibilityPanel({ feasibility, planet }) {
     };
 
     return () => {
-      if (scoreRaf.current) cancelAnimationFrame(scoreRaf.current);
-      if (glitchRaf.current) cancelAnimationFrame(glitchRaf.current);
-      if (flipTimer.current) clearTimeout(flipTimer.current);
+      if (cancelScore) cancelScore();
+      if (cancelGlitch) cancelGlitch();
+      if (flipTimer) clearTimeout(flipTimer);
     };
   }, [feasibility.status, feasibility.score, planet.id]);
 
@@ -120,30 +116,39 @@ export default function FeasibilityPanel({ feasibility, planet }) {
 }
 
 // ─── Tween a number from `from` → `to` over `duration` ms (ease-out cubic).
-//     `rafRef` is used so the parent component can cancel mid-flight when a
-//     new flip starts before the previous one finishes.
-function animateNumber(from, to, duration, setter, rafRef) {
+//     Returns a cancel function so React can cleanly stop a mid-flight flip.
+function animateNumber(from, to, duration, setter) {
   if (from == null || from === to) {
     setter(to);
-    return;
+    return () => {};
   }
   const start = performance.now();
+  let frameId = 0;
+  let cancelled = false;
   function tick(now) {
+    if (cancelled) return;
     const t = Math.min(1, (now - start) / duration);
     const eased = 1 - Math.pow(1 - t, 3);
     setter(Math.round(from + (to - from) * eased));
-    if (t < 1) rafRef.current = requestAnimationFrame(tick);
+    if (t < 1) frameId = requestAnimationFrame(tick);
   }
-  rafRef.current = requestAnimationFrame(tick);
+  frameId = requestAnimationFrame(tick);
+  return () => {
+    cancelled = true;
+    if (frameId) cancelAnimationFrame(frameId);
+  };
 }
 
 // ─── "Decoder" effect — each character of the target string starts as a
 //     random glyph and locks in over time. Reveal probability ramps up
 //     between t=0.3 and t=0.85 so the early phase feels chaotic and the
 //     end resolves cleanly.
-function glitchTo(target, duration, setter, rafRef) {
+function glitchTo(target, duration, setter) {
   const start = performance.now();
+  let frameId = 0;
+  let cancelled = false;
   function tick(now) {
+    if (cancelled) return;
     const t = Math.min(1, (now - start) / duration);
     if (t >= 1) {
       setter(target);
@@ -163,7 +168,11 @@ function glitchTo(target, duration, setter, rafRef) {
       }
     }
     setter(out);
-    rafRef.current = requestAnimationFrame(tick);
+    frameId = requestAnimationFrame(tick);
   }
-  rafRef.current = requestAnimationFrame(tick);
+  frameId = requestAnimationFrame(tick);
+  return () => {
+    cancelled = true;
+    if (frameId) cancelAnimationFrame(frameId);
+  };
 }

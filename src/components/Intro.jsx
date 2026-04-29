@@ -12,7 +12,7 @@
 //   • else if the line is finished, pause, then advance to the next
 //   • else (all lines typed), hold briefly, then move to title
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const TERMINAL_LINES = [
   { text: "EXODUS MISSION CONSOLE",                            style: "header",   charDelay: 30, pauseAfter: 350 },
@@ -36,10 +36,6 @@ export default function Intro({ onComplete }) {
   const [step, setStep] = useState(0);            // index into TERMINAL_LINES
   const [chars, setChars] = useState(0);          // chars typed of current line
   const [exiting, setExiting] = useState(false);
-
-  // Cancel any pending advancement once we start exiting.
-  const exitingRef = useRef(false);
-  exitingRef.current = exiting;
 
   useEffect(() => {
     if (scene !== "terminal") return;

@@ -17,9 +17,9 @@ import {
   getPlanetVisuals,
 } from "../logic/planetTexture.js";
 
-const CANVAS_SIZE = 200;          // square canvas (CSS px == device px here)
+const CANVAS_SIZE = 120;          // square canvas; CSS scales it to the hero size
 const ROTATION_PERIOD_S = 60;     // one full revolution in seconds
-const REDUCED_FPS = 30;           // cap to keep CPU low — planets rotate slowly anyway
+const REDUCED_FPS = 12;           // keep card hover/click smooth while the planet idles
 
 export default function PlanetHero({ planet }) {
   const canvasRef = useRef(null);
@@ -72,7 +72,7 @@ export default function PlanetHero({ planet }) {
     if (!planet) return;
     textureRef.current = generatePlanetTexture(planet);
     rotationRef.current = 0; // restart rotation from a clean angle
-  }, [planet?.id, planet?.planetType]);
+  }, [planet]);
 
   // ── Animation loop ──
   useEffect(() => {
@@ -146,7 +146,7 @@ export default function PlanetHero({ planet }) {
 
     rafRef.current = requestAnimationFrame(frame);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [planet?.id]);
+  }, [planet]);
 
   if (!planet) return null;
   const visuals = getPlanetVisuals(planet.planetType);

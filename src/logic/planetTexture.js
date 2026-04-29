@@ -93,9 +93,15 @@ export function getPlanetVisuals(type) {
 
 // ── Public: build an equirectangular RGBA texture for a planet ──
 // Returns { data: Uint8ClampedArray, width, height }.
+const textureCache = new Map();
+
 export function generatePlanetTexture(planet) {
-  const W = 512;
-  const H = 256;
+  const cacheKey = `${planet.id || planet.name || "exoplanet"}:${planet.planetType}`;
+  const cached = textureCache.get(cacheKey);
+  if (cached) return cached;
+
+  const W = 64;
+  const H = 32;
   const seed = hashString(planet.id || planet.name || "exoplanet");
   const noise = makeNoise(seed);
   const data = new Uint8ClampedArray(W * H * 4);
@@ -108,12 +114,12 @@ export function generatePlanetTexture(planet) {
       const nx = (x / W) * 8;
       const ny = (y / H) * 4;
 
-      let r = 0, g = 0, b = 0;
+      let r, g, b;
 
       if (type === "rocky") {
         // Brown/gray cratered surface — fbm + a sparser layer of dark spots
-        const base = (fbm(noise, nx * 1.4, ny * 1.4, 5) + 1) * 0.5;
-        const crater = Math.max(0, fbm(noise, nx * 7 + 91, ny * 7 + 91, 2)) * 0.5;
+        const base = (fbm(noise, nx * 1.4, ny * 1.4, 4) + 1) * 0.5;
+        const crater = Math.max(0, fbm(noise, nx * 7 + 91, ny * 7 + 91, 1)) * 0.5;
         const v = clamp(base - crater, 0, 1);
         const dark = [55, 45, 38];
         const mid  = [120, 96, 72];
@@ -126,8 +132,8 @@ export function generatePlanetTexture(planet) {
 
       else if (type === "super-earth") {
         // Earth-like: deep ocean → coast → land → highlands → polar caps + clouds
-        const elev = fbm(noise, nx * 1.2, ny * 1.2, 6); // -1..1
-        const cloud = (fbm(noise, nx * 2.4 + 50, ny * 2.4 + 50, 3) + 1) * 0.5;
+        const elev = fbm(noise, nx * 1.2, ny * 1.2, 4); // -1..1
+        const cloud = (fbm(noise, nx * 2.4 + 50, ny * 2.4 + 50, 2) + 1) * 0.5;
 
         let base;
         if (elev < -0.05) {
@@ -153,7 +159,7 @@ export function generatePlanetTexture(planet) {
         // Soft horizontal teal/cyan bands with light wave perturbation
         const wave = Math.sin((x / W) * Math.PI * 8 + lat * 4) * 0.05;
         const band = (Math.sin((lat + wave) * Math.PI * 5) + 1) * 0.5;
-        const detail = (fbm(noise, nx * 4, ny * 8, 3) + 1) * 0.5;
+        const detail = (fbm(noise, nx * 4, ny * 8, 2) + 1) * 0.5;
         const v = clamp(band * 0.7 + detail * 0.3, 0, 1);
         [r, g, b] = mixRGB([18, 70, 105], [120, 225, 240], v);
       }
@@ -162,7 +168,7 @@ export function generatePlanetTexture(planet) {
         // Strong Jupiter-style horizontal bands + turbulence + a single big spot
         const wave = Math.sin((x / W) * Math.PI * 6 + lat * 8) * 0.04;
         const band = (Math.sin((lat + wave) * Math.PI * 7) + 1) * 0.5;
-        const turb = (fbm(noise, nx * 6, ny * 4, 4) + 1) * 0.5;
+        const turb = (fbm(noise, nx * 6, ny * 4, 3) + 1) * 0.5;
         const v = clamp(band * 0.65 + turb * 0.35, 0, 1);
         const c1 = [120, 70, 35];
         const c2 = [205, 155, 100];
@@ -180,7 +186,7 @@ export function generatePlanetTexture(planet) {
 
       else {
         // Unknown — neutral cyan-tinted gray
-        const v = (fbm(noise, nx, ny, 4) + 1) * 0.5;
+        const v = (fbm(noise, nx, ny, 3) + 1) * 0.5;
         [r, g, b] = mixRGB([40, 50, 70], [150, 170, 200], v);
       }
 
@@ -191,5 +197,7 @@ export function generatePlanetTexture(planet) {
     }
   }
 
-  return { data, width: W, height: H };
+  const texture = { data, width: W, height: H };
+  textureCache.set(cacheKey, texture);
+  return texture;
 }
