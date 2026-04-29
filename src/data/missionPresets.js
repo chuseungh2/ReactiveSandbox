@@ -74,7 +74,7 @@ export const ALL_DISCOVERY_METHODS = [
 
 export const PLANET_TYPE_ICON = {
   rocky: "●",
-  "super-earth": "●",
-  "mini-neptune": "●",
-  "gas-giant": "●",
+  "super-earth": "◉",
+  "mini-neptune": "◐",
+  "gas-giant": "◯",
 };
