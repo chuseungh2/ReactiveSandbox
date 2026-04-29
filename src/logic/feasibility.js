@@ -48,9 +48,19 @@ export function calculateFeasibility(planet, constraints) {
   return { score, status, checks };
 }
 
-// Used by the Browser to decide whether a card matches the current filter.
-// (Discovery method is treated as a hard filter, not a feasibility check —
-// you literally cannot visit something nobody has imaged or transited.)
+// Used by the Browser/Controller candidate count to decide whether a planet
+// matches the current mission constraints. The habitable-zone flag stays in
+// feasibility scoring because it is a scientific quality signal, not a user
+// controlled filter.
 export function passesHardFilters(planet, constraints) {
-  return constraints.allowedDiscoveryMethods.includes(planet.discoveryMethod);
+  const [minTemp, maxTemp] = constraints.tempRangeC;
+
+  return (
+    planet.distanceLy <= constraints.maxDistanceLy &&
+    planet.equilibriumTempC >= minTemp &&
+    planet.equilibriumTempC <= maxTemp &&
+    constraints.allowedPlanetTypes.includes(planet.planetType) &&
+    planet.habitabilityScore >= constraints.minHabitabilityScore &&
+    constraints.allowedDiscoveryMethods.includes(planet.discoveryMethod)
+  );
 }
