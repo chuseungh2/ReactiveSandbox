@@ -49,18 +49,12 @@ export function calculateFeasibility(planet, constraints) {
 }
 
 // Used by the Browser/Controller candidate count to decide whether a planet
-// matches the current mission constraints. The habitable-zone flag stays in
-// feasibility scoring because it is a scientific quality signal, not a user
-// controlled filter.
+// should stay visible in the current mission context. GO and CAUTION remain
+// visible so the user can compare strong and partial fits; NO-GO worlds drop
+// out of the active candidate list.
 export function passesHardFilters(planet, constraints) {
-  const [minTemp, maxTemp] = constraints.tempRangeC;
-
   return (
-    planet.distanceLy <= constraints.maxDistanceLy &&
-    planet.equilibriumTempC >= minTemp &&
-    planet.equilibriumTempC <= maxTemp &&
-    constraints.allowedPlanetTypes.includes(planet.planetType) &&
-    planet.habitabilityScore >= constraints.minHabitabilityScore &&
-    constraints.allowedDiscoveryMethods.includes(planet.discoveryMethod)
+    constraints.allowedDiscoveryMethods.includes(planet.discoveryMethod) &&
+    calculateFeasibility(planet, constraints).status !== "NO-GO"
   );
 }
