@@ -135,7 +135,7 @@
 
 .header__subtitle {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 14px;
   color: var(--accent-cyan-soft);
   text-transform: uppercase;
   letter-spacing: 0.18em;
@@ -158,7 +158,7 @@
 
 .readout__label {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.16em;
   color: var(--text-muted);
@@ -166,7 +166,7 @@
 
 .readout__value {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-primary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -292,7 +292,7 @@
    should never compete with the planet hero or feasibility verdict. */
 .panel__title {
   font-family: var(--font-display);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.28em;
   color: var(--accent-cyan-soft);
@@ -305,14 +305,14 @@
 
 .panel__title::before {
   content: "◆";
-  font-size: 7px;
+  font-size: 14px;
   color: var(--accent-cyan);
   opacity: 0.6;
 }
 
 .panel__meta {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 14px;
   letter-spacing: 0.1em;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -363,7 +363,7 @@
 
 .empty-state__hint {
   margin-top: var(--space-2);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-muted);
   font-family: var(--font-mono);
 }
@@ -448,7 +448,7 @@
   right: var(--space-3);
   top: var(--space-3);
   color: var(--accent-cyan);
-  font-size: 12px;
+  font-size: 14px;
   text-shadow: 0 0 8px var(--accent-cyan-glow);
 }
 
@@ -461,7 +461,7 @@
 }
 
 .planet-card__row--meta {
-  font-size: 11px;
+  font-size: 14px;
   color: var(--text-muted);
 }
 
@@ -473,7 +473,7 @@
 
 .planet-card__name {
   font-weight: 600;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-primary);
   flex: 1 1 auto;
   overflow: hidden;
@@ -498,7 +498,7 @@
   color: var(--text-secondary);
 }
 
-.planet-card__unit { color: var(--text-muted); margin-left: 1px; font-size: 10px; }
+.planet-card__unit { color: var(--text-muted); margin-left: 1px; font-size: 14px; }
 .planet-card__divider { color: var(--text-muted); margin: 0 var(--space-1); opacity: 0.5; }
 
 /* 5-dot sparkline showing per-check pass/fail at a glance.
@@ -542,7 +542,7 @@
   align-items: center;
   height: 20px;
   padding: 0 var(--space-2);
-  font-size: 9px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -664,7 +664,7 @@
   align-items: center;
   gap: var(--space-2);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -677,7 +677,7 @@
 
 .planet-hero__zone {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-top: var(--space-1);
@@ -697,7 +697,7 @@
   align-items: baseline;
   gap: var(--space-2);
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 14px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-top: var(--space-1);
@@ -746,7 +746,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: var(--space-2);
-  font-size: 11px;
+  font-size: 14px;
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -780,7 +780,7 @@
 
 .metric__label {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.18em;
   color: var(--text-muted);
@@ -793,7 +793,7 @@
   font-family: var(--font-mono);
 }
 
-.metric__unit { font-size: 10px; color: var(--text-muted); }
+.metric__unit { font-size: 14px; color: var(--text-muted); }
 
 /* Current mission context — Tier 2 ambient readout. No card chrome,
    no glow strip. Just a labelled block of terminal-style key/value
@@ -808,7 +808,7 @@
 .mission-context__label {
   display: block;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.22em;
   color: var(--text-muted);
@@ -831,7 +831,7 @@
 
 .mission-context__item-label {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 14px;
   color: var(--text-muted);
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -842,7 +842,7 @@
 .mission-context__item-value {
   color: var(--text-secondary);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.4;
   overflow-wrap: anywhere;
   flex: 1 1 auto;
@@ -864,7 +864,7 @@
 
 .earth-compare__label {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.22em;
   color: var(--text-muted);
@@ -896,7 +896,7 @@
 
 .earth-compare__text {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 14px;
   fill: var(--text-secondary);
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -957,7 +957,7 @@
 
 .feas__heading {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.32em;
   color: var(--accent-cyan-soft);
@@ -1043,20 +1043,20 @@
 .feas__check--fail .feas__check-icon { color: var(--status-nogo); text-shadow: 0 0 8px var(--status-nogo-glow); }
 
 .feas__check-label {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-primary);
   letter-spacing: 0.02em;
 }
 
 .feas__check-weight {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   color: var(--text-muted);
 }
 
 .feas__check-detail {
   grid-column: 2 / 4;
-  font-size: 11px;
+  font-size: 14px;
   color: var(--text-muted);
   font-family: var(--font-mono);
   letter-spacing: 0.02em;
@@ -1165,7 +1165,7 @@
 
 .control-group__label {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.22em;
   color: var(--text-secondary);
@@ -1176,14 +1176,14 @@
    value the user is currently moving. */
 .control-group__value {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--accent-cyan);
   text-shadow: 0 0 8px var(--accent-cyan-glow);
 }
 
 .control-hint {
   margin-top: var(--space-2);
-  font-size: 10px;
+  font-size: 14px;
   color: var(--text-muted);
   font-family: var(--font-mono);
   letter-spacing: 0.05em;
@@ -1197,7 +1197,7 @@
   color: var(--text-secondary);
   text-transform: none;
   letter-spacing: 0.02em;
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.5;
   border-left: 1px solid var(--accent-cyan-dim);
   padding-left: var(--space-2);
@@ -1217,7 +1217,7 @@
 .profile-toggle__btn {
   padding: var(--space-3) var(--space-2);
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.18em;
@@ -1295,7 +1295,7 @@
   display: flex;
   justify-content: space-between;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 14px;
   color: var(--text-muted);
   letter-spacing: 0.08em;
 }
@@ -1368,7 +1368,7 @@
 }
 
 .check__label {
-  font-size: 11px;
+  font-size: 14px;
   color: var(--text-primary);
   text-transform: capitalize;
   font-family: var(--font-mono);
@@ -1401,7 +1401,7 @@
 
 .summary-readout__label {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.22em;
   color: var(--accent-cyan-soft);
@@ -1433,7 +1433,7 @@
 
 .summary-readout__warn {
   margin-top: var(--space-1);
-  font-size: 10px;
+  font-size: 14px;
   color: var(--status-nogo);
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -1476,7 +1476,7 @@
 
 .intro__skip button {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   letter-spacing: 0.2em;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -1642,7 +1642,7 @@
 .intro__continue-btn {
   padding: var(--space-2) var(--space-4);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.28em;
   color: var(--accent-cyan);
@@ -1719,7 +1719,7 @@
 
 .intro__subtitle {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 0.36em;
   text-transform: uppercase;
   color: var(--accent-cyan-soft);
@@ -1731,7 +1731,7 @@
   margin-top: var(--space-3);
   padding: var(--space-4) var(--space-6);
   font-family: var(--font-display);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.36em;
   color: var(--accent-cyan);
@@ -1771,7 +1771,7 @@
 
 .intro__op {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 14px;
   letter-spacing: 0.32em;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -1804,11 +1804,11 @@
     flex-wrap: wrap;
   }
   .header__title h1 {
-    font-size: 13px;
+    font-size: 14px;
     letter-spacing: 0.22em;
   }
   .header__subtitle {
-    font-size: 9px;
+    font-size: 14px;
     letter-spacing: 0.14em;
   }
   .panels {
